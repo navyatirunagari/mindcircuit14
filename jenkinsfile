@@ -23,11 +23,11 @@ pipeline {
         stage('DEPLOY TOMCAT') {
             steps {
                 echo 'Deploying artifact to tomcat webserver'
-               deploy adapters: [tomcat9(credentialsId: 'tomcat', path: '', url: 'http://ec2-54-174-92-215.compute-1.amazonaws.com:8091')], contextPath: 'pipeline-cicd', war: '**/*.war’            }
-        }
+              deploy adapters: [tomcat9(credentialsId: 'tomcat', path: '', url: 'http://ec2-54-174-92-215.compute-1.amazonaws.com:8091')], contextPath: 'pipeline-cicd', war: '**/*.war’        
+   }
     }
  }    
-
+}
     
         
         
