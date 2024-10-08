@@ -1,32 +1,29 @@
 pipeline {
     agent any
 
-
- stages {
-        stage('CLONE SCM') {
+    stages {
+        stage('CLONE SCM' ) {
             steps {
-                echo 'Cloning code from GitHub'
-               git branch: 'main', url: 'https://github.com/navyatirunagari/mindcircuit14.git'
-            }
+                echo 'CLONING CODE FROM GITHUB'
+              git branch: 'main', url: 'https://github.com/navyatirunagari/mindcircuit14.git'
+           } 
+       }  
+           
+              stage('BUILD ARTIFACT') {
+            steps {
+                echo 'BUILDING PROJECT FROM MAVEN'
+              sh 'mvn clean install'
+            } 
+       }
+
+          stage('DEPLOY TO TOMCAT') {
+            steps {
+                echo 'DEPLOYING   ARTIFACT TO TOMCAT WEBSERVER' 
+deploy adapters: [tomcat9(credentialsId: 'tomcat', path: '', url: 'http://ec2-54-174-92-215.compute-1.amazonaws.com:8091')], contextPath: 'pipeline-cicd', war: '**/*.war'
+          }
+
         }
-    
-    
-        stage('BUILD ARTIFACT') {
-            steps {
-                echo 'Building project with maven'
-                sh 'mvn clean install'
-
-            }
-        }
-    
-
-        stage('DEPLOY TOMCAT') {
-            steps {
-                echo 'Deploying artifact to tomcat webserver'
-              deploy adapters: [tomcat9(credentialsId: 'tomcat', path: '', url: 'http://ec2-54-174-92-215.compute-1.amazonaws.com:8091')], contextPath: 'pipeline-cicd', war: '**/*.war’        
-   }
     }
- }    
 }
     
         
