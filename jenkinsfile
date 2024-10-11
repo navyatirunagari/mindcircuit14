@@ -19,7 +19,7 @@ pipeline {
           stage('DEPLOY TO TOMCAT') {
             steps {
                 echo 'DEPLOYING   ARTIFACT TO TOMCAT WEBSERVER' 
-         deploy adapters: [tomcat9(path: '', url: 'http://ec2-54-165-243-199.compute-1.amazonaws.com:8091')], contextPath: 'MC-APP', war: '**/*.war'
+         deploy adapters: [tomcat9(path: '', url: 'http://ec2-54-165-243-199.compute-1.amazonaws.com:8091/')], contextPath: 'MC-APP', war: '**/*.war'
           }
 
         }
